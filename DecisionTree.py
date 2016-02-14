@@ -18,11 +18,18 @@ class DecisionTree:
 
     # generator function to map key-value pair
     # and holds values respective to attributes
-    # i.e. attributes with respective example values
-    # in a dictionary
+    # i.e. attributes with respective example values in a dictionary
     def get_examples(examples, attributes):
         for value in examples:
             yield dict(zip(attributes, value.strip().replace(" ", "").split(',')))
+
+    # using entropy to calculate the homogeneity of a sample.
+    # If the sample is completely homogeneous the entropy is zero and
+    # if the sample is an equally divided it has entropy of one.
+    # it is based on the overall distribution of predicate
+    def get_entropy_of_attributes(examples, number_of_predicates):
+
+        return 0
 
     # get the file name from the user
     file_name = input("Enter the input file name: ")
@@ -56,4 +63,13 @@ class DecisionTree:
             # holds all the examples as a list of dictionary
             # for instance: dic=[{'name_attributes': respective_example_value_from_the_file},...{}]
             examples = get_examples(all_examples, name_of_attributes)
+
+            # get the values of Predicate from the examples
+            # set - unordered collection of unique elements
+            Predicate_list = list(set([d['Predicate'] for d in examples]))
+
+            # invoke get_entropy_of_attributes function
+            get_entropy_of_attributes(examples,len(Predicate_list))
+
+
 
