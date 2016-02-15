@@ -18,23 +18,47 @@ import os
 # and holds values respective to attributes
 # i.e. attributes with respective example values in a dictionary
 def get_examples(examples, attributes):
+
     for value in examples:
         yield dict(zip(attributes, value.strip().replace(" ", "").split(',')))
 
 
 # get the list of Goal Predicate from the examples
 # extracted from the input file
-def get_all_predicates(examples):
+def get_goal_predicates(examples):
+
     return [d['Predicate'] for d in examples]
+
+
+# get the total distribution of goal predicates
+# for instance: total number of yes/no
+def get_goal_predicate_distribution(examples, goal_predicate_list):
+
+    number_of_occurrence = []   # holds total number of occurrence of goal predicates
+    goal_predicate_occurrence = {}  # holds the predicate,respective occurrence value in dictionary
+
+    # count the occurrence and store in the list
+    for i in range(len(goal_predicate_list)):
+        number_of_occurrence.append(get_goal_predicates(examples).count(goal_predicate_list[i]))
+
+    # hold the values as (key,value)
+    zip_pair = zip(goal_predicate_list, number_of_occurrence)
+
+    # assign values to the dictionary
+    for goal_predicate_list, total_occurrence in zip_pair:
+        goal_predicate_occurrence[goal_predicate_list] = total_occurrence
+
+    return goal_predicate_occurrence
 
 
 # using entropy to calculate the homogeneity of a sample.
 # If the sample is completely homogeneous the entropy is zero and
 # if the sample is an equally divided it has entropy of one.
 # it is based on the overall distribution of predicate
-def get_entropy_of_attributes(examples, predicate_list):
-    get_all_predicates(examples).count(predicate_list[0])
-    return 0
+def get_entropy_of_attributes(examples, goal_predicate_list):
+
+    get_goal_predicate_distribution(examples, goal_predicate_list)
+    return
 
 # get the file name from the user
 file_name = input("Enter the input file name: ")
@@ -71,10 +95,9 @@ else:
 
         # get the values of Predicate from the examples
         # set - unordered collection of unique elements
-        predicate_list = list(set(get_all_predicates(examples)))
+        goal_predicate_list = list(set(get_goal_predicates(examples)))
 
         # invoke get_entropy_of_attributes function
-        get_entropy_of_attributes(examples, predicate_list)
-
+        get_entropy_of_attributes(examples, goal_predicate_list)
 
 
