@@ -12,7 +12,7 @@
 #       Following	N	lines	contain	X+1	values	containing	the	data	set,	separated	by	comma.
 
 import os
-
+import math
 
 # generator function to map key-value pair
 # and holds values respective to attributes
@@ -32,33 +32,50 @@ def get_goal_predicates(examples):
 
 # get the total distribution of goal predicates
 # for instance: total number of yes/no
-def get_goal_predicate_distribution(examples, goal_predicate_list):
+def get_goal_predicate_frequency(examples, goal_predicate_list):
 
-    number_of_occurrence = []   # holds total number of occurrence of goal predicates
-    goal_predicate_occurrence = {}  # holds the predicate,respective occurrence value in dictionary
+    # holds total number of occurrence of goal predicates
+    frequency = []
+    # holds the predicate,respective occurrence value in dictionary
+    goal_predicate_distribution = {}
 
     # count the occurrence and store in the list
     for i in range(len(goal_predicate_list)):
-        number_of_occurrence.append(get_goal_predicates(examples).count(goal_predicate_list[i]))
+        frequency.append(get_goal_predicates(examples).count(goal_predicate_list[i]))
 
     # hold the values as (key,value)
-    zip_pair = zip(goal_predicate_list, number_of_occurrence)
+    zip_pair = zip(goal_predicate_list, frequency)
 
     # assign values to the dictionary
-    for goal_predicate_list, total_occurrence in zip_pair:
-        goal_predicate_occurrence[goal_predicate_list] = total_occurrence
+    for goal_predicate_list, frequency in zip_pair:
+        goal_predicate_distribution[goal_predicate_list] = frequency
 
-    return goal_predicate_occurrence
+    return goal_predicate_distribution
 
 
 # using entropy to calculate the homogeneity of a sample.
+# Entropy is the sum of p(x)log(p(x)) across all the different possible results
 # If the sample is completely homogeneous the entropy is zero and
 # if the sample is an equally divided it has entropy of one.
 # it is based on the overall distribution of predicate
-def get_entropy_of_attributes(examples, goal_predicate_list):
+def get_entropy(examples, goal_predicate_list):
 
-    get_goal_predicate_distribution(examples, goal_predicate_list)
-    return
+    # store the entropy value
+    predicate_entropy = 0
+    # store the sum of frequencies
+    sum_of_frequencies = 0
+
+    # store the dictionary with predicate and its frequency
+    frequency_values = get_goal_predicate_frequency(examples, goal_predicate_list)
+
+    for key in frequency_values.keys():
+        sum_of_frequencies += frequency_values[key]
+
+    for key in frequency_values.keys():
+        predicate_entropy += (-frequency_values[key]/sum_of_frequencies) * math.log(frequency_values[key]/sum_of_frequencies, 2)
+
+    print(predicate_entropy)
+    return 0
 
 # get the file name from the user
 file_name = input("Enter the input file name: ")
@@ -98,6 +115,6 @@ else:
         goal_predicate_list = list(set(get_goal_predicates(examples)))
 
         # invoke get_entropy_of_attributes function
-        get_entropy_of_attributes(examples, goal_predicate_list)
+        get_entropy(examples, goal_predicate_list)
 
 
