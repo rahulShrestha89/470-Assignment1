@@ -14,6 +14,7 @@
 import os
 import math
 
+
 # generator function to map key-value pair
 # and holds values respective to attributes
 # i.e. attributes with respective example values in a dictionary
@@ -53,6 +54,31 @@ def get_goal_predicate_frequency(examples, goal_predicate_list):
     return goal_predicate_distribution
 
 
+# get the frequency of examples
+# i.e. occurrence of an attribute value in an example
+# get the total distribution of goal predicates
+# for instance: total number of yes/no
+def get_example_frequency(examples, name_of_attributes):
+
+    # stores the unique values of an attribute in a list of lists
+    unique_example = []
+    # holds total number of occurrence of example of an attribute
+    frequency = []
+    # holds the example value of an attribute and it's frequency together
+    example_frequency = {}
+
+    # reads the attributes and its respective example values
+    for i in range(len(name_of_attributes)-1):
+        unique_example.append(list(set([d[name_of_attributes[i]] for d in examples])))
+
+    # count total occurrence of unique_example in examples
+    # count the occurrence and store them in the list
+    for i in range(len(unique_example)):
+        print 
+
+    return 0
+
+
 # using entropy to calculate the homogeneity of a sample.
 # Entropy is the sum of p(x)log(p(x)) across all the different possible results
 # If the sample is completely homogeneous the entropy is zero and
@@ -74,7 +100,13 @@ def get_entropy(examples, goal_predicate_list):
     for key in frequency_values.keys():
         predicate_entropy += (-frequency_values[key]/sum_of_frequencies) * math.log(frequency_values[key]/sum_of_frequencies, 2)
 
-    print(predicate_entropy)
+    return predicate_entropy
+
+
+# Entropy using the frequency table of two attributes
+# It is the product of Probability and Entropy value of the attribute
+def get_entropy_of_two_attributes(examples, goal_predicate_list):
+
     return 0
 
 # get the file name from the user
@@ -117,4 +149,4 @@ else:
         # invoke get_entropy_of_attributes function
         get_entropy(examples, goal_predicate_list)
 
-
+        get_example_frequency(examples,goal_predicate_list)
