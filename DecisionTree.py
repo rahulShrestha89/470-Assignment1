@@ -125,11 +125,26 @@ def get_goal_predicate_entropy(examples, goal_predicate_list):
     return predicate_entropy
 
 
+# gets the entropy of the examples based on their frequency
+def get_entropy(value):
+
+    return 0
+
+
 # Entropy using the frequency table of two attributes
 # It is the product of Probability and Entropy value of the attribute
 def get_entropy_of_two_attributes(attribute_frequency_list):
 
+    unique_examples = get_unique_example_values(examples, name_of_attributes)
 
+    # holds the entropy value
+    multiple_entropy = 0
+
+    for i in range(len(name_of_attributes)-1):
+        for j in range(len(unique_examples)):
+            for k in range(len(unique_examples[k])):
+                multiple_entropy += ((int([d[name_of_attributes[i]] for d in examples].count(unique_examples[j][k]))) /
+                                     (len(examples))) * get_entropy(unique_examples[j][k])
     return 0
 
 # get the file name from the user
