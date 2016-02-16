@@ -63,16 +63,35 @@ def get_example_frequency(examples, name_of_attributes, goal_predicate_list):
     # stores the unique values of an attribute in a list of lists
     unique_example = []
 
+    # hold attribute_frequency_dict as a list
+    # stores as [{ },{ },...{ }]
+    attribute_frequency_list = []
+
     # reads the attributes and its respective example values
     for i in range(len(name_of_attributes)-1):
         unique_example.append(list(set([d[name_of_attributes[i]] for d in examples])))
 
     for i in range(len(unique_example)):
         for j in range(len(unique_example[i])):
-            for k in range(len(goal_predicate_list)):
-                result = [x for x in examples if x['Predicate'] == goal_predicate_list[k] and
-                          x[name_of_attributes[i]] == unique_example[i][j]]
 
+            print()
+            print(name_of_attributes[i])
+            print(unique_example[i][j])
+
+            # stores as { "attribute": value, "predicate_value[0]": occurrence, "predicate_value[1]": occurrence}
+            attribute_frequency_dict = {name_of_attributes[i]: unique_example[i][j]}
+
+            for k in range(len(goal_predicate_list)):
+                print(goal_predicate_list[k])
+
+                frequency = len([x for x in examples if x['Predicate'] == goal_predicate_list[k] and
+                                 x[name_of_attributes[i]] == unique_example[i][j]])
+                attribute_frequency_dict[goal_predicate_list[k]] = frequency
+
+                print(frequency)
+            attribute_frequency_list.append(attribute_frequency_dict)
+
+    print(attribute_frequency_list)
     return 0
 
 
