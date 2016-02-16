@@ -26,14 +26,14 @@ def get_examples(examples, attributes):
 
 # get the list of Goal Predicate from the examples
 # extracted from the input file
-def get_goal_predicates(examples):
+def get_goal_predicates():
 
     return [d['Predicate'] for d in examples]
 
 
 # get the total distribution of goal predicates
 # for instance: total number of yes/no
-def get_goal_predicate_frequency(examples, goal_predicate_list):
+def get_goal_predicate_frequency(goal_predicate_list):
 
     # holds total number of occurrence of goal predicates
     frequency = []
@@ -42,7 +42,7 @@ def get_goal_predicate_frequency(examples, goal_predicate_list):
 
     # count the occurrence and store in the list
     for i in range(len(goal_predicate_list)):
-        frequency.append(get_goal_predicates(examples).count(goal_predicate_list[i]))
+        frequency.append(get_goal_predicates().count(goal_predicate_list[i]))
 
     # hold the values as (key,value)
     zip_pair = zip(goal_predicate_list, frequency)
@@ -55,7 +55,7 @@ def get_goal_predicate_frequency(examples, goal_predicate_list):
 
 
 # get the unique example values of each attribute in a list
-def get_unique_example_values(examples, name_of_attributes):
+def get_unique_example_values():
 
     # stores the unique values of an attribute in a list of lists
     unique_example = []
@@ -71,10 +71,10 @@ def get_unique_example_values(examples, name_of_attributes):
 # i.e. occurrence of an attribute value in an example
 # get the total distribution of goal predicates
 # for instance: total number of yes/no
-def get_example_frequency(examples, name_of_attributes, goal_predicate_list):
+def get_example_frequency():
 
     # stores the unique values of an attribute in a list of lists
-    unique_example = get_unique_example_values(examples, name_of_attributes)
+    unique_example = get_unique_example_values()
 
     # hold attribute_frequency_dict as a list
     # stores as [{ },{ },...{ }]
@@ -105,7 +105,7 @@ def get_example_frequency(examples, name_of_attributes, goal_predicate_list):
 # it is based on the overall distribution of predicate
 
 # gets the entropy of the target i.e. the goal predicate
-def get_goal_predicate_entropy(examples, goal_predicate_list):
+def get_goal_predicate_entropy():
 
     # store the entropy value
     predicate_entropy = 0
@@ -113,7 +113,7 @@ def get_goal_predicate_entropy(examples, goal_predicate_list):
     sum_of_frequencies = 0
 
     # store the dictionary with predicate and its frequency
-    frequency_values = get_goal_predicate_frequency(examples, goal_predicate_list)
+    frequency_values = get_goal_predicate_frequency(goal_predicate_list)
 
     for key in frequency_values.keys():
         sum_of_frequencies += frequency_values[key]
@@ -135,7 +135,7 @@ def get_entropy(value):
 # It is the product of Probability and Entropy value of the attribute
 def get_entropy_of_two_attributes(attribute_frequency_list):
 
-    unique_examples = get_unique_example_values(examples, name_of_attributes)
+    unique_examples = get_unique_example_values()
 
     # holds the entropy value
     multiple_entropy = 0
@@ -182,9 +182,9 @@ else:
 
         # get the values of Predicate from the examples
         # set - unordered collection of unique elements
-        goal_predicate_list = list(set(get_goal_predicates(examples)))
+        goal_predicate_list = list(set(get_goal_predicates()))
 
         # invoke get_entropy_of_attributes function
-        get_goal_predicate_entropy(examples, goal_predicate_list)
+        get_goal_predicate_entropy()
 
-        get_example_frequency(examples, name_of_attributes, goal_predicate_list)
+        get_example_frequency()
