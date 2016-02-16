@@ -58,23 +58,20 @@ def get_goal_predicate_frequency(examples, goal_predicate_list):
 # i.e. occurrence of an attribute value in an example
 # get the total distribution of goal predicates
 # for instance: total number of yes/no
-def get_example_frequency(examples, name_of_attributes):
+def get_example_frequency(examples, name_of_attributes, goal_predicate_list):
 
     # stores the unique values of an attribute in a list of lists
     unique_example = []
-    # holds total number of occurrence of example of an attribute
-    frequency = []
-    # holds the example value of an attribute and it's frequency together
-    example_frequency = {}
 
     # reads the attributes and its respective example values
     for i in range(len(name_of_attributes)-1):
         unique_example.append(list(set([d[name_of_attributes[i]] for d in examples])))
 
-    # count total occurrence of unique_example in examples
-    # count the occurrence and store them in the list
     for i in range(len(unique_example)):
-        print 
+        for j in range(len(unique_example[i])):
+            for k in range(len(goal_predicate_list)):
+                result = [x for x in examples if x['Predicate'] == goal_predicate_list[k] and
+                          x[name_of_attributes[i]] == unique_example[i][j]]
 
     return 0
 
@@ -149,4 +146,4 @@ else:
         # invoke get_entropy_of_attributes function
         get_entropy(examples, goal_predicate_list)
 
-        get_example_frequency(examples,goal_predicate_list)
+        get_example_frequency(examples, name_of_attributes, goal_predicate_list)
