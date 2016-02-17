@@ -130,16 +130,13 @@ def get_entropy(attribute, value):
 
     # holds all the info for attributes and its respective goal predicate frequency
     data = get_example_frequency()
-    for d in data:
-        print(d)
-    print(attribute)
+
     # finds the dictionary with attribute == value
     dic = next(item for item in data if item.get(attribute) == value)
 
-    print(attribute)
     # remove the attribute and value from dictionary
     dic.pop(attribute, None)
-    print(dic)
+
     # stores the entropy value
     entropy = 0
 
@@ -152,8 +149,7 @@ def get_entropy(attribute, value):
             entropy += 0
         else:
             entropy += (-(dic[goal_predicate_list[i]]/total_sum)) * math.log((dic[goal_predicate_list[i]])/total_sum, 2)
-    print(entropy)
-    print()
+
     return entropy
 
 
@@ -165,13 +161,10 @@ def get_entropy_of_two_attributes(attribute,index):
 
     # holds the entropy value
     entropy = 0
-    print(len(unique_examples))
-    print(len(unique_examples[0]))
 
-    # TODO: loop only while the dictionary contains the attribute name
-
+    # loop until sub list has values
     for k in range(len(unique_examples[index])):
-        print(unique_examples[index][k])
+
         entropy += ((int([d[attribute] for d in examples].count(unique_examples[index][k]))) /
                     (len(examples))) * (get_entropy(attribute, unique_examples[index][k]))
 
