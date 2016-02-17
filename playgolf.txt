@@ -1,0 +1,17 @@
+14
+4
+Outlook,Temp,Humidity,Windy
+R,H,H,F,N
+R,H,H,T,N
+O,H,H,F,Y
+S,M,H,F,Y
+S,C,N,F,Y
+S,C,N,T,N
+O,C,N,T,Y
+R,M,H,F,N
+R,C,N,F,Y
+S,M,N,F,Y
+R,M,N,T,Y
+O,M,H,T,Y
+O,H,N,F,Y
+S,M,H,T,N
