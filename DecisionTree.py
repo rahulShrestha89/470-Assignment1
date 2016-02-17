@@ -185,14 +185,17 @@ def get_information_gain():
         information_gain_dict[name_of_attributes[i]] = (get_goal_predicate_entropy() -
                                                         get_entropy_of_two_attributes(name_of_attributes[i], i))
 
-    return 0
+    return information_gain_dict
 
 
 # find the best attribute based on information gain
 # attribute with the largest information gain is the decision node.
 def find_best_attribute():
 
-    return 0
+    # find key with the highest entropy value
+    best_attribute = max(get_information_gain(), key=get_information_gain().get)
+
+    return best_attribute
 
 # get the file name from the user
 file_name = input("Enter the input file name: ")
@@ -234,4 +237,6 @@ else:
         # invoke get_entropy_of_attributes function
         get_goal_predicate_entropy()
 
-        get_information_gain()
+        # gets the best attribute for the tree
+        print()
+        print(' The best attribute for the root node is ' + find_best_attribute())
