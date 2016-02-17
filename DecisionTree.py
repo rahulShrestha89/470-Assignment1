@@ -134,6 +134,7 @@ def get_entropy(attribute, value):
     # finds the dictionary with attribute == value
     dic = next(item for item in data if item.get(attribute) == value)
 
+    print(attribute)
     # remove the attribute and value from dictionary
     dic.pop(attribute, None)
     print(dic)
@@ -150,29 +151,40 @@ def get_entropy(attribute, value):
         else:
             entropy += (-(dic[goal_predicate_list[i]]/total_sum)) * math.log((dic[goal_predicate_list[i]])/total_sum, 2)
     print(entropy)
+    print()
     return entropy
 
 
 # Entropy using the frequency table of two attributes
 # It is the product of Probability and Entropy value of the attribute
-def get_entropy_of_two_attributes():
+def get_entropy_of_two_attributes(attribute):
 
     unique_examples = get_unique_example_values()
 
     # holds the entropy value
-    multiple_entropy = 0
+    entropy = 0
 
-    for i in range(len(name_of_attributes)-1):
-        for j in range(len(unique_examples)):
-            for k in range(len(unique_examples[k])):
-                multiple_entropy += ((int([d[name_of_attributes[i]] for d in examples].count(unique_examples[j][k]))) /
-                                     (len(examples))) * get_entropy(name_of_attributes[i], unique_examples[j][k])
-    return 0
+    for j in range(len(unique_examples)):
+        for k in range(len(unique_examples[j])):
+            print(unique_examples[j][k])
+            entropy += ((int([d[attribute] for d in examples].count(unique_examples[j][k]))) /
+                        (len(examples))) * (get_entropy(attribute, unique_examples[j][k]))
+
+    return entropy
 
 
 # information gain is based on the decrease in entropy after a data set is split on an attribute
-# gain = entropy(predicate) - entropy(attribute along with the predicate)
+# gain = entropy(goal predicate) - entropy(attribute along with the predicate)
 def get_information_gain():
+
+    # stores as { "attribute_1": entropy_value_1, "attribute_2": entropy_value_2 }
+    information_gain_dict = {}
+
+    # stores the difference between entropy of predicates in a dictionary
+    for i in range(len(name_of_attributes)-1):
+
+        information_gain_dict[name_of_attributes[i]] = (get_goal_predicate_entropy() -
+                                                        get_entropy_of_two_attributes(name_of_attributes[i]))
 
     return 0
 
@@ -223,5 +235,4 @@ else:
         # invoke get_entropy_of_attributes function
         get_goal_predicate_entropy()
 
-        get_example_frequency()
-
+        get_information_gain()
