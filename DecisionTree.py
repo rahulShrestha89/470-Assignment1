@@ -130,7 +130,9 @@ def get_entropy(attribute, value):
 
     # holds all the info for attributes and its respective goal predicate frequency
     data = get_example_frequency()
-
+    for d in data:
+        print(d)
+    print(attribute)
     # finds the dictionary with attribute == value
     dic = next(item for item in data if item.get(attribute) == value)
 
@@ -157,18 +159,21 @@ def get_entropy(attribute, value):
 
 # Entropy using the frequency table of two attributes
 # It is the product of Probability and Entropy value of the attribute
-def get_entropy_of_two_attributes(attribute):
+def get_entropy_of_two_attributes(attribute,index):
 
     unique_examples = get_unique_example_values()
 
     # holds the entropy value
     entropy = 0
+    print(len(unique_examples))
+    print(len(unique_examples[0]))
 
-    for j in range(len(unique_examples)):
-        for k in range(len(unique_examples[j])):
-            print(unique_examples[j][k])
-            entropy += ((int([d[attribute] for d in examples].count(unique_examples[j][k]))) /
-                        (len(examples))) * (get_entropy(attribute, unique_examples[j][k]))
+    # TODO: loop only while the dictionary contains the attribute name
+
+    for k in range(len(unique_examples[index])):
+        print(unique_examples[index][k])
+        entropy += ((int([d[attribute] for d in examples].count(unique_examples[index][k]))) /
+                    (len(examples))) * (get_entropy(attribute, unique_examples[index][k]))
 
     return entropy
 
@@ -181,10 +186,11 @@ def get_information_gain():
     information_gain_dict = {}
 
     # stores the difference between entropy of predicates in a dictionary
+    # loop starts with the first attribute
     for i in range(len(name_of_attributes)-1):
 
         information_gain_dict[name_of_attributes[i]] = (get_goal_predicate_entropy() -
-                                                        get_entropy_of_two_attributes(name_of_attributes[i]))
+                                                        get_entropy_of_two_attributes(name_of_attributes[i], i))
 
     return 0
 
