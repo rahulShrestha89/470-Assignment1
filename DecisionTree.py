@@ -94,7 +94,7 @@ def get_example_frequency():
                 attribute_frequency_dict[goal_predicate_list[k]] = frequency
 
             attribute_frequency_list.append(attribute_frequency_dict)
-        print(attribute_frequency_list)
+
     return attribute_frequency_list
 
 
@@ -126,9 +126,31 @@ def get_goal_predicate_entropy():
 
 
 # gets the entropy of the examples based on their frequency
-def get_entropy(value):
+def get_entropy(attribute, value):
 
-    return 0
+    # holds all the info for attributes and its respective goal predicate frequency
+    data = get_example_frequency()
+
+    # finds the dictionary with attribute == value
+    dic = next(item for item in data if item.get(attribute) == value)
+
+    # remove the attribute and value from dictionary
+    dic.pop(attribute, None)
+    print(dic)
+    # stores the entropy value
+    entropy = 0
+
+    # stores the sum of all frequency of an attribute example
+    total_sum = sum(dic.values())
+
+    for i in range(len(goal_predicate_list)):
+        # check if the frequency is 0
+        if (dic[goal_predicate_list[i]]) == 0:
+            entropy += 0
+        else:
+            entropy += (-(dic[goal_predicate_list[i]]/total_sum)) * math.log((dic[goal_predicate_list[i]])/total_sum, 2)
+    print(entropy)
+    return entropy
 
 
 # Entropy using the frequency table of two attributes
@@ -144,7 +166,7 @@ def get_entropy_of_two_attributes(attribute_frequency_list):
         for j in range(len(unique_examples)):
             for k in range(len(unique_examples[k])):
                 multiple_entropy += ((int([d[name_of_attributes[i]] for d in examples].count(unique_examples[j][k]))) /
-                                     (len(examples))) * get_entropy(unique_examples[j][k])
+                                     (len(examples))) * get_entropy(name_of_attributes[i], unique_examples[j][k])
     return 0
 
 # get the file name from the user
@@ -188,3 +210,5 @@ else:
         get_goal_predicate_entropy()
 
         get_example_frequency()
+
+        get_entropy('Sepal_Length', '5.0')
