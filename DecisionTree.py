@@ -155,7 +155,7 @@ def get_entropy(attribute, value):
 
 # Entropy using the frequency table of two attributes
 # It is the product of Probability and Entropy value of the attribute
-def get_entropy_of_two_attributes(attribute_frequency_list):
+def get_entropy_of_two_attributes():
 
     unique_examples = get_unique_example_values()
 
@@ -167,6 +167,20 @@ def get_entropy_of_two_attributes(attribute_frequency_list):
             for k in range(len(unique_examples[k])):
                 multiple_entropy += ((int([d[name_of_attributes[i]] for d in examples].count(unique_examples[j][k]))) /
                                      (len(examples))) * get_entropy(name_of_attributes[i], unique_examples[j][k])
+    return 0
+
+
+# information gain is based on the decrease in entropy after a data set is split on an attribute
+# gain = entropy(predicate) - entropy(attribute along with the predicate)
+def get_information_gain():
+
+    return 0
+
+
+# find the best attribute based on information gain
+# attribute with the largest information gain is the decision node.
+def find_best_attribute():
+
     return 0
 
 # get the file name from the user
@@ -211,4 +225,3 @@ else:
 
         get_example_frequency()
 
-        get_entropy('Sepal_Length', '5.0')
