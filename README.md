@@ -1,3 +1,17 @@
+Rahul Shrestha
+
+Phase: Still under developement. 
+Progress: Able to find the best attribute
+
+File Structure:
+readme.txt
+DecisionTree.py
+and Contains few test files!
+
+Language: Python 
+
+Development Environment:
+Developed in PyCharm 
 
 Usage:
 My program is compatible with Python 3.x. There will be some issues running it on 2.x versions. 
