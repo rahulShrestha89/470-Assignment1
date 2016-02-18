@@ -2,6 +2,7 @@
 # Rahul Shrestha
 # CMPS 470-Spring 2016
 # Dr. John W. Burris
+# https://github.com/rahulShrestha89/470-Assignment1
 
 # This program implements the DECISION_TREE_LEARNING algorithm.
 
@@ -197,6 +198,63 @@ def find_best_attribute():
 
     return best_attribute
 
+
+# TODO:
+# find the most common value for an attribute
+def majority():
+
+    return 0
+
+
+# TODO:
+def get_values():
+
+    return 0
+
+
+def make_tree(data, attributes, target, recursion):
+
+    recursion += 1
+
+    # Returns a new decision tree based on the examples given
+    data = data[:]
+    vals = [record[attributes.index(target)] for record in data]
+    default = majority(attributes, data, target)
+
+    # If the data set is empty or the attributes list is empty, return the
+    # default value. When checking the attributes list for emptiness, we
+    # need to subtract 1 to account for the target attribute.
+    if not data or (len(attributes) - 1) <= 0:
+        return default
+
+    # If all the records in the data set have the same classification,
+    # return that classification.
+    elif vals.count(vals[0]) == len(vals):
+        return vals[0]
+
+    else:
+        # Choose the next best attribute to best classify our data
+        best = find_best_attribute()
+
+        # Create a new decision tree/node with the best attribute and an empty
+        # dictionary object--we'll fill that up next.
+        tree = {best: {}}
+
+        # Create a new decision tree/sub-node for each of the values in the
+        # best attribute field
+        for val in get_values(data, attributes, best):
+            # Create a subtree for the current value under the "best" field
+            example = get_example_frequency(data, attributes, best, val)
+            new_attr = attributes[:]
+            new_attr.remove(best)
+            subtree = make_tree(examples, new_attr, target, recursion)
+
+            # Add the new subtree to the empty dictionary object in our new
+            # tree/node we just created.
+            tree[best][val] = subtree
+
+    return tree
+
 # get the file name from the user
 file_name = input("Enter the input file name: ")
 
@@ -240,3 +298,5 @@ else:
         # gets the best attribute for the tree
         print()
         print(' The best attribute for the root node is ' + find_best_attribute())
+        print('Still a work in progress to get the TRESS!')
+
