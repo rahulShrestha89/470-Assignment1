@@ -296,7 +296,10 @@ else:
         get_goal_predicate_entropy()
 
         # gets the best attribute for the tree
+        print('Finding the best attribute....')
+
         print()
         print(' The best attribute for the root node is ' + find_best_attribute())
+        print()
         print('Still a work in progress to get the TRESS!')
 
